@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from .models import Greeting
 
+from django.http import HttpResponse
 # Create your views here.
 
 
@@ -26,3 +27,8 @@ def db(request):
     greetings = Greeting.objects.all()
 
     return render(request, "db.html", {"greetings": greetings})
+
+
+
+def api(request):
+    return HttpResponse("API Data from ts-server to be served!")
