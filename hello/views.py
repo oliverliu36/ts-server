@@ -1,6 +1,8 @@
+import json
+
 from django.shortcuts import render
 
-from .models import Greeting
+from .models import Greeting, Player
 
 import requests
 import os
@@ -34,4 +36,10 @@ def db(request):
 
 
 def api(request):
-    return HttpResponse("API Data from ts-server to be served!")
+    player = Player(last_name="Player", first_name="Tennis", utr=0.00, info="info placeholder")
+    player.save()
+    players = list(Player.objects.all())
+    last_names = []
+    for p in players:
+        last_names.append(p.last_name)
+    return HttpResponse(json.dumps(last_names))
