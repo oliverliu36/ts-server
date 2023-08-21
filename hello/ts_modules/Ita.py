@@ -5,9 +5,14 @@ from selenium.webdriver.common.by import By
 import time
 
 
-def getPlayers(page):
 
-    driver = webdriver.Chrome()
+def getPlayers(page):
+    # headless, which means the browser won't pop up from the screen!
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless=new")
+    driver = webdriver.Chrome(options=options)
+
+    # driver = webdriver.Chrome()
     driver.get(page)
 
     time.sleep(3) # Wait for webpage to load
