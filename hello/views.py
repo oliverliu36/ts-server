@@ -8,7 +8,7 @@ import os
 from django.http import HttpResponse
 # Create your views here.
 
-from hello.ts_modules.Ita import getPlayers
+from hello.ts_modules.Usta import getPlayers
 
 
 def index(request):
@@ -37,18 +37,15 @@ def db(request):
 
 
 def api(request):
-    player = Player(last_name="Player", first_name="Tennis", utr=0.00, info="info placeholder")
-    player.save()
+    page = request.headers['Page']
+    res = getPlayers(page)
+    playersList = json.loads(res)
+    for p in playersList:
+        player = Player(last_name=p, first_name="", utr=0.00, info="info placeholder")
+        player.save()
     players = list(Player.objects.all())
     last_names = []
     for p in players:
         last_names.append(p.last_name)
     return HttpResponse(json.dumps(last_names))
 
-
-
-def crawl(request):
-    # Crawl the web to get some data
-    url = 'https://playtennis.usta.com/Competitions/texasamuniversity/Tournaments/players/04E68AD1-68B6-4771-943D-212AAAD15B81'
-    res = getPlayers(url)
-    return HttpResponse(res)

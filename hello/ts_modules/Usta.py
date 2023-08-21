@@ -10,7 +10,7 @@ import time
 
 
 def getPlayers(page):
-
+    # Uncomment For Deploy VV
     service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
 
     options = webdriver.ChromeOptions()
@@ -20,7 +20,11 @@ def getPlayers(page):
 
     # options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 
+    # Uncomment For Deploy VV
     driver = webdriver.Chrome(service=service, options=options)
+
+    # Comment out for deploy VV
+    # driver = webdriver.Chrome()
     driver.get(page)
 
     time.sleep(3) # Wait for webpage to load
