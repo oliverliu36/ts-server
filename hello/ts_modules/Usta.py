@@ -7,24 +7,12 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 import time
 
+from .ConfigDriver import get_driver
 
 
 def getPlayers(page):
-    # Uncomment For Deploy VV
-    service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
 
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless=new")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--no-sandbox")
-
-    # options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-
-    # Uncomment For Deploy VV
-    driver = webdriver.Chrome(service=service, options=options)
-
-    # Comment out for deploy VV
-    # driver = webdriver.Chrome()
+    driver = get_driver()
     driver.get(page)
 
     time.sleep(3) # Wait for webpage to load
