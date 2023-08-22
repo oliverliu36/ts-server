@@ -1,3 +1,6 @@
+8/21 Issues:
+- Problems with deploying Universal Tennis Code
+
 Adding Selenium to Heroku ts-server:
 - Helpful:
 - https://romik-kelesh.medium.com/how-to-deploy-a-python-web-scraper-with-selenium-on-heroku-1459cb3ac76c
