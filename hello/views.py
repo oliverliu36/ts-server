@@ -1,4 +1,5 @@
 import json
+import random
 
 from django.shortcuts import render
 
@@ -38,6 +39,12 @@ def db(request):
 
 
 def playerdb(request):
+    # add a random player to DB
+    n = random.randrange(1000, 9999, 1)
+    player = Player(last_name="Player " + str(n), first_name="Tennis", utr=0.00, info="info placeholder")
+    player.save()
+
+    # Get all player from db
     players = list(Player.objects.all())
     last_names = []
     for p in players:
