@@ -37,6 +37,14 @@ def db(request):
     return render(request, "db.html", {"greetings": greetings})
 
 
+def playerdb(request):
+    players = list(Player.objects.all())
+    last_names = []
+    for p in players:
+        last_names.append(p.last_name)
+    return HttpResponse(json.dumps(last_names))
+
+
 
 def api(request):
     # page recieved from request header
