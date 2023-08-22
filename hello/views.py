@@ -9,6 +9,8 @@ from django.http import HttpResponse
 # Create your views here.
 
 from hello.ts_modules.Usta import getPlayers
+from .ts_modules import UniversalTennis
+from .ts_modules.processEntryList import get_new_players_list, look_up_players
 
 
 def index(request):
@@ -38,14 +40,27 @@ def db(request):
 
 def api(request):
     page = request.headers['Page']
+
     res = getPlayers(page)
-    playersList = json.loads(res)
-    for p in playersList:
-        player = Player(last_name=p, first_name="", utr=0.00, info="info placeholder")
-        player.save()
-    players = list(Player.objects.all())
-    last_names = []
-    for p in players:
-        last_names.append(p.last_name)
-    return HttpResponse(json.dumps(last_names))
+
+    entry_list = json.loads(res)
+
+    new_players = get_new_players_list(entry_list)
+
+    if(len(new_players) > 0):
+        UniversalTennis.runUniversalTennis(new_players)
+
+    look_up_results = look_up_players(entry_list)
+
+    return HttpResponse(json.dumps(look_up_results))
+
+    # for p in entry_list:
+    #     player = Player(last_name=p, first_name="", utr=0.00, info="info placeholder")
+    #     player.save()
+    # players = list(Player.objects.all())
+    # last_names = []
+    # for p in players:
+    #     last_names.append(p.last_name)
+    #
+    # return HttpResponse(json.dumps(new_players))
 

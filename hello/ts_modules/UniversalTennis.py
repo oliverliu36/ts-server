@@ -7,6 +7,8 @@ from selenium.webdriver.common.by import By
 import time
 
 from hello.models import Player
+from .ConfigDriver import get_driver
+
 
 
 def add_player_to_db(new_player):
@@ -79,7 +81,7 @@ def getFirstUtrScore(name, driver):
 def runUniversalTennis(entry_list):
     PATH = "C:\Program Files (x86)\chromedriver.exe"
 
-    driver = webdriver.Chrome()
+    driver = get_driver()
 
     driver.get("https://app.universaltennis.com/login")
 
