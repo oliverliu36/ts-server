@@ -39,28 +39,24 @@ def db(request):
 
 
 def api(request):
+    # page recieved from request header
     page = request.headers['Page']
 
+    # get players from usta page
     res = getPlayers(page)
 
+    # entry list [] from json list
     entry_list = json.loads(res)
 
+    # see which players are new and to the database
     new_players = get_new_players_list(entry_list)
 
+    # if there are new players, get their Universal Tennis info from universaltennis.com
     if(len(new_players) > 0):
         UniversalTennis.runUniversalTennis(new_players)
 
+    # look up player info from ts database
     look_up_results = look_up_players(entry_list)
 
     return HttpResponse(json.dumps(look_up_results))
-
-    # for p in entry_list:
-    #     player = Player(last_name=p, first_name="", utr=0.00, info="info placeholder")
-    #     player.save()
-    # players = list(Player.objects.all())
-    # last_names = []
-    # for p in players:
-    #     last_names.append(p.last_name)
-    #
-    # return HttpResponse(json.dumps(new_players))
 
